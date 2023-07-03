@@ -1,32 +1,52 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { Schema } from "yup";
-import * as yup from "yup";
 
-class Taxios<T> {
-  constructor(private readonly schema: Schema<T>) {}
+export type Schema<T> =
+  | {
+    parse(data: unknown): T | Promise<T>;
+  }
+  | {
+    validate(data: unknown): T | Promise<T>;
+  };
 
-  private __simpleAxiosMethod<F extends (...args: any[]) => Promise<any>>(method: F) {
-    return async function <R extends AxiosResponse<T, any> = AxiosResponse<T, any>>(
-      this: Taxios<T>,
-      ...params: Parameters<F>
-    ) {
+async function validate<T>(data: unknown, schema: Schema<T>) {
+  let parsed = "parse" in schema ? schema.parse(data) : schema.validate(data);
+
+  if (
+    parsed &&
+    typeof parsed === "object" &&
+    "then" in parsed &&
+    parsed.then instanceof Function
+  ) {
+    return await parsed;
+  } else {
+    return parsed;
+  }
+}
+
+export class Taxios<T> {
+  constructor(private schema: Schema<T>) { }
+
+  private __simpleAxiosMethod<F extends (...args: any[]) => Promise<any>>(
+    method: F
+  ) {
+    return async function <
+      R extends AxiosResponse<T, any> = AxiosResponse<T, any>
+    >(this: Taxios<T>, ...params: Parameters<F>) {
       const response: R = await method(...params);
-      await this.schema.validate(response.data, { strict: true });
+      response.data = await validate(response.data, this.schema);
       return response;
     };
   }
 
   private __axiosMethodWithData(
-    method: (url: string, data: any, config?: AxiosRequestConfig) => any,
+    method: (url: string, data: any, config?: AxiosRequestConfig) => any
   ) {
-    return async function <D = any, R extends AxiosResponse<T, any> = AxiosResponse<T, any>>(
-      this: Taxios<T>,
-      url: string,
-      data: D,
-      config?: AxiosRequestConfig,
-    ) {
+    return async function <
+      D = any,
+      R extends AxiosResponse<T, any> = AxiosResponse<T, any>
+    >(this: Taxios<T>, url: string, data: D, config?: AxiosRequestConfig) {
       const response: R = await method(url, data, config);
-      await this.schema.validate(response.data, { strict: true });
+      response.data = await validate(response.data, this.schema);
       return response;
     };
   }
@@ -41,8 +61,6 @@ class Taxios<T> {
   patch = this.__axiosMethodWithData(axios.patch);
 }
 
-export function taxios<T>(schema: Schema<T>) {
-  return new Taxios<T>(schema);
+export function taxios<R>(schema: Schema<R>): Taxios<R> {
+  return new Taxios(schema);
 }
-
-export default taxios;
