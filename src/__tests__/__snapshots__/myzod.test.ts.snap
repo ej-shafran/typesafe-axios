@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`myzod interop throws a validation error when the data is invalid 1`] = `
+"{
+  "name": "MyZodError",
+  "path": [
+    "email"
+  ]
+}"
+`;
