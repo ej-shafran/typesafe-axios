@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`joi interop throws a validation error when the data is invalid 1`] = `
+"{
+  "_original": {
+    "id": "SOME_ID",
+    "username": "SOME_USERNAME",
+    "address": "ABC123 St.",
+    "followers": []
+  },
+  "details": [
+    {
+      "message": "\\"email\\" is required",
+      "path": [
+        "email"
+      ],
+      "type": "any.required",
+      "context": {
+        "label": "email",
+        "key": "email"
+      }
+    }
+  ]
+}"
+`;
