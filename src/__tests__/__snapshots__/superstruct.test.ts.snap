@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`superstruct interop returns \`error\` and not \`data\` when the data is invalid 1`] = `
+"{
+  "type": "string",
+  "key": "email",
+  "path": [
+    "email"
+  ],
+  "branch": [
+    {
+      "id": "SOME_ID",
+      "username": "SOME_USERNAME",
+      "address": "ABC123 St.",
+      "followers": []
+    },
+    null
+  ],
+  "name": "StructError"
+}"
+`;
