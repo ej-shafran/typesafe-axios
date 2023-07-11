@@ -21,10 +21,10 @@ const SCHEMA = Record({
 });
 
 type TYPE = Static<typeof SCHEMA>;
-function ensure(_: TYPE) { }
+function ensure(_: TYPE) {}
 
 describe("Runtypes interop", () => {
-  it("passes along data with the correct type", async () => {
+  it("returns `success === true` and the value for valid data", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.VALID);
 
     const response = await taxios(SCHEMA).get(UTILS.API);
@@ -36,7 +36,7 @@ describe("Runtypes interop", () => {
     }
   });
 
-  it("throws a validation error when the data is invalid", async () => {
+  it("returns `success === false` and an error message for invalid data", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.INVALID);
 
     const response = await taxios(SCHEMA).get(UTILS.API);

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ArkType interop throws a validation error when the data is invalid 1`] = `
+exports[`ArkType interop returns \`problems\` and not \`data\` when then data is invalid 1`] = `
 "[
   {
     "code": "missing",

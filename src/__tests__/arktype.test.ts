@@ -25,7 +25,7 @@ type TYPE = typeof SCHEMA.infer;
 function ensure(_: TYPE) { }
 
 describe("ArkType interop", () => {
-  it("passes along data with the correct type", async () => {
+  it("returns `data` and not `problems` when the data is valid", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.VALID);
 
     const response = await taxios(SCHEMA).get(UTILS.API);
@@ -36,7 +36,7 @@ describe("ArkType interop", () => {
     ensure(data!);
   });
 
-  it("throws a validation error when the data is invalid", async () => {
+  it("returns `problems` and not `data` when then data is invalid", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.INVALID);
 
     const response = await taxios(SCHEMA).get(UTILS.API);

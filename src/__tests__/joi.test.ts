@@ -21,17 +21,19 @@ const SCHEMA = Joi.object({
 });
 
 describe("joi interop", () => {
-  it("passes along data with the correct type", async () => {
+  it("returns `value` and not `error` when the data is valid", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.VALID);
     const { data } = await taxios(SCHEMA).get(UTILS.API);
 
+    expect(data.error).toBeUndefined();
     expect(data.value).toEqual(UTILS.VALID);
   });
 
-  it("throws a validation error when the data is invalid", async () => {
+  it("returns `error` when the data is invalid", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.INVALID);
 
     const { data } = await taxios(SCHEMA).get(UTILS.API);
+
     expect(JSON.stringify(data.error, null, 2)).toMatchSnapshot();
   });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`joi interop throws a validation error when the data is invalid 1`] = `
+exports[`joi interop returns \`error\` when the data is invalid 1`] = `
 "{
   "_original": {
     "id": "SOME_ID",

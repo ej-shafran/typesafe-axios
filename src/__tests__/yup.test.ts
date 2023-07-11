@@ -37,6 +37,7 @@ describe("yup interop", () => {
 
     try {
       await taxios(SCHEMA).get(UTILS.API);
+      fail("Did not throw error.");
     } catch (error) {
       expect(JSON.stringify(error, null, 2)).toMatchSnapshot();
     }
