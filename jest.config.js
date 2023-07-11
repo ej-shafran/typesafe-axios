@@ -5,4 +5,5 @@ module.exports = {
   transform: {
     "^.+\\.(t|j)sx?$": "@swc/jest",
   },
+  testPathIgnorePatterns: ["__utils__"],
 };
