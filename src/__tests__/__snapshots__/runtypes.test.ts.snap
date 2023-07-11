@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Runtypes interop throws a validation error when the data is invalid 1`] = `
+"Validation failed:
+{
+  "email": "Expected string, but was missing",
+  "address": "Expected { street: string; zipcode?: string; }, but was string"
+}.
+Object should match { id: string; username: string; email: string; address: { street: string; zipcode?: string; }; followers: { id: string; role?: "admin" | "guest"; }[]; }"
+`;
