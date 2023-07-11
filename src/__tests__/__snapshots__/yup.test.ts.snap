@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`yup interop throws a validation error when the data is invalid 1`] = `
+"{
+  "value": {
+    "id": "SOME_ID",
+    "username": "SOME_USERNAME",
+    "address": "ABC123 St.",
+    "followers": []
+  },
+  "path": "address",
+  "type": "typeError",
+  "errors": [
+    "address must be a \`object\` type, but the final value was: \`\\"ABC123 St.\\"\`."
+  ],
+  "params": {
+    "value": "ABC123 St.",
+    "originalValue": "ABC123 St.",
+    "path": "address",
+    "spec": {
+      "strip": false,
+      "strict": false,
+      "abortEarly": true,
+      "recursive": true,
+      "nullable": false,
+      "optional": true,
+      "coerce": true
+    },
+    "type": "object"
+  },
+  "inner": [],
+  "name": "ValidationError",
+  "message": "address must be a \`object\` type, but the final value was: \`\\"ABC123 St.\\"\`."
+}"
+`;

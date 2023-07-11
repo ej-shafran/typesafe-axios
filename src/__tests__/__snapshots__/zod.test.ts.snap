@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`zod interop throws a validation error when the data is invalid 1`] = `
+"{
+  "issues": [
+    {
+      "code": "invalid_type",
+      "expected": "string",
+      "received": "undefined",
+      "path": [
+        "email"
+      ],
+      "message": "Required"
+    },
+    {
+      "code": "invalid_type",
+      "expected": "object",
+      "received": "string",
+      "path": [
+        "address"
+      ],
+      "message": "Expected object, received string"
+    }
+  ],
+  "name": "ZodError"
+}"
+`;

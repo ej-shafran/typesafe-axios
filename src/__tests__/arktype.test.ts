@@ -24,7 +24,7 @@ const SCHEMA = scope({
 type TYPE = typeof SCHEMA.infer;
 function ensure(_: TYPE) { }
 
-describe("zod interop", () => {
+describe("ArkType interop", () => {
   it("passes along data with the correct type", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.VALID);
     const { data } = await taxios(SCHEMA).get(UTILS.API);
@@ -33,10 +33,13 @@ describe("zod interop", () => {
     ensure(data);
   });
 
-  it("throws a validation error when the data is invalid", () => {
+  it("throws a validation error when the data is invalid", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.INVALID);
 
-    //TODO: snapshots
-    expect(taxios(SCHEMA).get(UTILS.API)).rejects.toBeDefined();
+    try {
+      await taxios(SCHEMA).get(UTILS.API);
+    } catch (error) {
+      expect(JSON.stringify(error, null, 2)).toMatchSnapshot();
+    }
   });
 });
