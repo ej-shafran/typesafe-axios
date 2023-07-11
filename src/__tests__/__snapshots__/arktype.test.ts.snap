@@ -1,24 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ArkType interop throws a validation error when the data is invalid 1`] = `
-"{
-  "cause": [
-    {
-      "code": "missing",
-      "path": [
-        "email"
-      ],
-      "writers": {}
-    },
-    {
-      "code": "domain",
-      "path": [
-        "address"
-      ],
-      "data": "ABC123 St.",
-      "source": "object",
-      "writers": {}
-    }
-  ]
-}"
+"[
+  {
+    "code": "missing",
+    "path": [
+      "email"
+    ],
+    "writers": {}
+  },
+  {
+    "code": "domain",
+    "path": [
+      "address"
+    ],
+    "data": "ABC123 St.",
+    "source": "object",
+    "writers": {}
+  }
+]"
 `;

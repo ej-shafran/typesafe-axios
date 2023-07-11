@@ -27,19 +27,22 @@ function ensure(_: TYPE) { }
 describe("ArkType interop", () => {
   it("passes along data with the correct type", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.VALID);
-    const { data } = await taxios(SCHEMA).get(UTILS.API);
+
+    const response = await taxios(SCHEMA).get(UTILS.API);
+    const { data, problems } = response.data;
 
     expect(data).toEqual(UTILS.VALID);
-    ensure(data);
+    expect(problems).toBeUndefined();
+    ensure(data!);
   });
 
   it("throws a validation error when the data is invalid", async () => {
     nock(UTILS.API).get("/").reply(200, UTILS.INVALID);
 
-    try {
-      await taxios(SCHEMA).get(UTILS.API);
-    } catch (error) {
-      expect(JSON.stringify(error, null, 2)).toMatchSnapshot();
-    }
+    const response = await taxios(SCHEMA).get(UTILS.API);
+    const { data, problems } = response.data;
+
+    expect(data).toBeUndefined();
+    expect(JSON.stringify(problems, null, 2)).toMatchSnapshot();
   });
 });
