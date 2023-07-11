@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`simple-runtypes interop throws a validation error when the data is invalid 1`] = `
+"{
+  "name": "RuntypeError",
+  "reason": "missing key in record: \\"email\\"",
+  "path": []
+}"
+`;
