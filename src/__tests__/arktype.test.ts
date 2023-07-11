@@ -1,25 +1,22 @@
 import { taxios } from "..";
 
-import { scope } from "arktype";
+import { arrayOf, type } from "arktype";
 import nock from "nock";
 import * as UTILS from "./__utils__";
 
-const SCHEMA = scope({
-  follower: {
+const SCHEMA = type({
+  id: "string",
+  username: "string",
+  email: "string",
+  address: {
+    street: "string",
+    "zipcode?": "string",
+  },
+  followers: arrayOf({
     id: "string",
     "role?": '"admin" | "guest"',
-  },
-  user: {
-    id: "string",
-    username: "string",
-    email: "string",
-    address: {
-      street: "string",
-      "zipcode?": "string",
-    },
-    followers: "follower[]",
-  },
-}).compile().user;
+  }),
+});
 
 type TYPE = typeof SCHEMA.infer;
 function ensure(_: TYPE) { }
