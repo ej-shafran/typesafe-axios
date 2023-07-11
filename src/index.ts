@@ -1,22 +1,22 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
+type Validator<T> = (data: unknown) => T | Promise<T>;
+
 export type Schema<T> =
   | {
-    parse(data: unknown): T | Promise<T>;
+    parse: Validator<T>;
   }
   | {
-    validate(data: unknown): T | Promise<T>;
+    validate: Validator<T>;
   }
-  | {
-    assert(data: unknown): T | Promise<T>;
-  };
+  | Validator<T>;
 
 async function validate<T>(data: unknown, schema: Schema<T>) {
   let parsed =
-    "parse" in schema
-      ? schema.parse(data)
-      : "assert" in schema
-        ? schema.assert(data)
+    typeof schema === "function"
+      ? schema(data)
+      : "parse" in schema
+        ? schema.parse(data)
         : schema.validate(data);
 
   if (
