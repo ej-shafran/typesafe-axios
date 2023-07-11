@@ -6,10 +6,18 @@ export type Schema<T> =
   }
   | {
     validate(data: unknown): T | Promise<T>;
+  }
+  | {
+    assert(data: unknown): T | Promise<T>;
   };
 
 async function validate<T>(data: unknown, schema: Schema<T>) {
-  let parsed = "parse" in schema ? schema.parse(data) : schema.validate(data);
+  let parsed =
+    "parse" in schema
+      ? schema.parse(data)
+      : "assert" in schema
+        ? schema.assert(data)
+        : schema.validate(data);
 
   if (
     parsed &&
